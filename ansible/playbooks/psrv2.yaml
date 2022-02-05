@@ -14,17 +14,3 @@
         - postfix
         - dovecot
         state: latest
-
-  -  name: Add repo PGsql12
-     command: "{{ item }}"
-     with_items:
-        - rpm -Uvh https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm --replacepkgs
-        - dnf clean all
-        - dnf -qy module disable postgresql
-
-  -  name: Install PGsql12
-     yum:
-        name:
-        - postgresql12
-        - postgresql12-server
-        state: present
