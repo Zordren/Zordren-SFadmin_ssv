@@ -1,0 +1,21 @@
+---
+
+ - hosts: filebeat-host
+   become: yes
+   tasks:
+
+   - name: CentOS Install filebeat
+     command: "{{ item }}"
+     with_items:
+     - curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.17.0-x86_64.rpm
+     - rpm -vi filebeat-7.17.0-x86_64.rpm
+     - rm -rf filebeat-7.17.0-x86_64.rpm
+     when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+   - name: Ubuntu Install filebeat
+     command: "{{ item }}"
+     with_items:
+     - curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.17.0-amd64.deb
+     - sudo dpkg -i filebeat-7.17.0-amd64.deb
+     - rm -rf filebeat-7.17.0-amd64.deb
+     when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'

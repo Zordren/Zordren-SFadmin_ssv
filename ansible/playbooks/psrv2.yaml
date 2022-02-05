@@ -1,0 +1,30 @@
+---
+
+- hosts: psrv2
+  become: yes
+  tasks:
+  -  name: Install nginx, Apache, PHP, bind, mail
+     yum:
+        name:
+        - nginx
+        - httpd
+        - php73
+        - php73-php-fpm
+        - bind
+        - postfix
+        - dovecot
+        state: latest
+
+  -  name: Add repo PGsql12
+     command: "{{ item }}"
+     with_items:
+        - rpm -Uvh https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm --replacepkgs
+        - dnf clean all
+        - dnf -qy module disable postgresql
+
+  -  name: Install PGsql12
+     yum:
+        name:
+        - postgresql12
+        - postgresql12-server
+        state: present
