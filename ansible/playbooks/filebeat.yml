@@ -16,6 +16,6 @@
      command: "{{ item }}"
      with_items:
      - curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.17.0-amd64.deb
-     - sudo dpkg -i filebeat-7.17.0-amd64.deb
+     - dpkg -i filebeat-7.17.0-amd64.deb
      - rm -rf filebeat-7.17.0-amd64.deb
      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
