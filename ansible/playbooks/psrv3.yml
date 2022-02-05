@@ -1,0 +1,20 @@
+---
+
+- hosts: psrv3
+  become: yes
+  tasks:
+
+  -  name: Install PGsql
+     apt:
+        name:
+        - postgresql
+        - postgresql-contrib
+        state: latest
+
+  -  name: Install Elasticsearch
+     command: "{{ item }}"
+     with_items:
+     - wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.17.0-amd64.deb
+     - dpkg -i elasticsearch-7.17.0-amd64.deb
+     - rm -rf elasticsearch-7.17.0-amd64.deb
+
